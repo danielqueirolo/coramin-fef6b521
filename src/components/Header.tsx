@@ -1,11 +1,12 @@
-
 import { Link } from "react-router-dom";
 import { Book, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -16,7 +17,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
           <Book className="h-6 w-6 text-divine-600" />
-          <span className="font-serif text-xl font-semibold text-divine-800">Divine Teen Whispers</span>
+          <span className="font-serif text-xl font-semibold text-divine-800">Coramino</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -36,6 +37,25 @@ const Header = () => {
           <Link to="/library" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
             Library
           </Link>
+
+          {user ? (
+            <Button 
+              variant="outline" 
+              onClick={signOut}
+              className="text-divine-700 hover:text-divine-900"
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <Link to="/auth">
+              <Button 
+                variant="outline"
+                className="text-divine-700 hover:text-divine-900"
+              >
+                Sign In
+              </Button>
+            </Link>
+          )}
         </nav>
 
         {/* Mobile Menu Button */}
@@ -68,6 +88,25 @@ const Header = () => {
             <Link to="/library" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
               Library
             </Link>
+
+            {user ? (
+              <Button 
+                variant="outline" 
+                onClick={signOut}
+                className="text-divine-700 hover:text-divine-900 w-full"
+              >
+                Sign Out
+              </Button>
+            ) : (
+              <Link to="/auth" className="w-full">
+                <Button 
+                  variant="outline"
+                  className="text-divine-700 hover:text-divine-900 w-full"
+                >
+                  Sign In
+                </Button>
+              </Link>
+            )}
           </nav>
         </div>
       )}
