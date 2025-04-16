@@ -1,14 +1,21 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
+  Wind,
   BookOpen, 
   MessageSquare, 
   Heart, 
-  Coffee 
+  Coffee,
+  ArrowRightCircle
 } from "lucide-react";
 
 const LectioSteps = () => {
   const steps = [
+    {
+      title: "Preparation (Statio)",
+      icon: Wind,
+      description: "Prepare your heart and mind for the encounter with sacred text through silence and prayer."
+    },
     {
       title: "Read (Lectio)",
       icon: BookOpen,
@@ -28,11 +35,16 @@ const LectioSteps = () => {
       title: "Rest (Contemplatio)",
       icon: Coffee,
       description: "Simply rest in God's presence. No words are needed, just be with God and receive His love."
+    },
+    {
+      title: "Action (Actio)",
+      icon: ArrowRightCircle,
+      description: "Consider how you will carry this Word into the world through concrete actions in your daily life."
     }
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {steps.map((step, index) => (
         <Card key={index} className="lectio-card h-full">
           <CardHeader className="pb-2 space-y-0">

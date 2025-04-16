@@ -8,14 +8,14 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <p className="text-sm text-divine-700">
-              © {new Date().getFullYear()} Divine Teen Whispers
+              © {new Date().getFullYear()} Coramino
             </p>
           </div>
           
           <div className="flex items-center space-x-2 text-sm text-divine-700">
             <span>Made with</span>
             <Heart className="h-4 w-4 text-divine-500 fill-divine-500" />
-            <span>for teen spiritual growth</span>
+            <span>for spiritual growth</span>
           </div>
         </div>
       </div>

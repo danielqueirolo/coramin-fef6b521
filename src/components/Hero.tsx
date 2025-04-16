@@ -12,8 +12,8 @@ const Hero = () => {
             <span className="text-divine-700">Grow</span> Closer to God Through Ancient Prayer
           </h1>
           <p className="text-lg md:text-xl text-divine-700 mb-8">
-            Experience the transformative power of Lectio Divina - a sacred way to read, 
-            reflect, and respond to Scripture designed especially for teens.
+            Experience the transformative power of Lectio Divina with Coramino - a sacred way to read, 
+            reflect, and respond to Scripture designed for your spiritual journey.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/daily">

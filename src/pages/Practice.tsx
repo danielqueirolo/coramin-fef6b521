@@ -4,13 +4,39 @@ import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, MessageSquare, Heart, Coffee, ChevronRight, ChevronLeft, Clock } from "lucide-react";
+import { 
+  BookOpen, 
+  MessageSquare, 
+  Heart, 
+  Coffee, 
+  ChevronRight, 
+  ChevronLeft, 
+  Clock,
+  Feather,
+  Wind,
+  ArrowRightCircle
+} from "lucide-react";
 import { useState } from "react";
+import PracticeJournal from "@/components/PracticeJournal";
 
 const Practice = () => {
   const [currentStep, setCurrentStep] = useState(0);
   
   const steps = [
+    {
+      id: "preparation",
+      title: "Preparation (Statio)",
+      icon: Wind,
+      color: "text-teal-500",
+      description: "Prepare your heart and mind for the encounter with the sacred text.",
+      instructions: [
+        "Find a quiet, comfortable place where you won't be disturbed.",
+        "Sit in a position that allows you to be both relaxed and alert.",
+        "Take several deep breaths, inhaling peace and exhaling distractions.",
+        "Become aware of God's presence with you in this moment.",
+        "Ask the Holy Spirit to guide your reading and reflection."
+      ]
+    },
     {
       id: "read",
       title: "Read (Lectio)",
@@ -18,11 +44,11 @@ const Practice = () => {
       color: "text-blue-500",
       description: "Read the passage slowly and attentively. Notice any words or phrases that stand out to you.",
       instructions: [
-        "Find a quiet place where you won't be disturbed.",
-        "Take a few deep breaths to calm your mind and heart.",
         "Read the passage slowly, savoring each word.",
         "Read it again, listening for a word or phrase that stands out to you.",
-        "What word or phrase captures your attention or touches your heart?"
+        "What word or phrase captures your attention or touches your heart?",
+        "Repeat this word or phrase to yourself, allowing it to sink in.",
+        "Be attentive to how God might be speaking to you through these words."
       ]
     },
     {
@@ -44,14 +70,15 @@ const Practice = () => {
       title: "Respond (Oratio)",
       icon: Heart,
       color: "text-red-500",
-      description: "Speak to God in prayer about what you've read and reflected upon.",
+      description: "Speak to God in prayer about what you've read and reflected upon. Record your thoughts in the journal below.",
       instructions: [
         "Respond honestly to God about what came up during your reflection.",
         "Talk to God as you would to a friend about your thoughts, feelings, and questions.",
         "Ask for guidance, forgiveness, or strength if needed.",
         "Express gratitude for what God has revealed to you.",
-        "Be authentic in your prayer - God values honesty."
-      ]
+        "Record your prayer and reflections in the journal below."
+      ],
+      hasJournal: true
     },
     {
       id: "rest",
@@ -66,6 +93,21 @@ const Practice = () => {
         "Don't worry about thinking or saying anything.",
         "Just be present and open to God's transforming embrace."
       ]
+    },
+    {
+      id: "action",
+      title: "Action (Actio)",
+      icon: ArrowRightCircle,
+      color: "text-green-500",
+      description: "Consider how you will carry this Word into the world through your actions.",
+      instructions: [
+        "What is one concrete way you can live out this Scripture today?",
+        "How might this word change how you interact with others?",
+        "Is there a specific action or change of attitude God is calling you to?",
+        "What obstacles might you face in applying this word, and how can you overcome them?",
+        "Commit to one small, manageable step you can take today."
+      ],
+      hasJournal: true
     }
   ];
   
@@ -144,6 +186,15 @@ const Practice = () => {
                         ))}
                       </ul>
                       
+                      {currentStepData.hasJournal && (
+                        <div className="my-6">
+                          <PracticeJournal 
+                            step={currentStepData.id} 
+                            scripture="Philippians 4:6-7"
+                          />
+                        </div>
+                      )}
+                      
                       <div className="flex justify-between pt-4">
                         <Button
                           variant="outline"
@@ -184,7 +235,8 @@ const Practice = () => {
                       </p>
                       <p className="text-divine-700">
                         The practice dates back to the early centuries of Christian monasticism, and was formalized 
-                        as a four-step process by the Benedictine monk Guigo II in the 12th century.
+                        as a four-step process by the Benedictine monk Guigo II in the 12th century. Today, many practitioners
+                        add the steps of Preparation (Statio) before beginning and Action (Actio) at the end.
                       </p>
                       <p className="text-divine-700">
                         Unlike regular Bible study where we analyze text for information, Lectio Divina invites us 
