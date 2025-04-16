@@ -5,15 +5,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
+  Wind, 
   BookOpen, 
   MessageSquare, 
   Heart, 
-  Coffee, 
-  ChevronRight, 
-  ChevronLeft, 
+  Coffee,
+  ChevronRight,
+  ChevronLeft,
   Clock,
-  Feather,
-  Wind,
   ArrowRightCircle
 } from "lucide-react";
 import { useState } from "react";
@@ -49,7 +48,8 @@ const Practice = () => {
         "What word or phrase captures your attention or touches your heart?",
         "Repeat this word or phrase to yourself, allowing it to sink in.",
         "Be attentive to how God might be speaking to you through these words."
-      ]
+      ],
+      showScripture: true
     },
     {
       id: "reflect",
@@ -107,7 +107,8 @@ const Practice = () => {
         "What obstacles might you face in applying this word, and how can you overcome them?",
         "Commit to one small, manageable step you can take today."
       ],
-      hasJournal: true
+      hasJournal: true,
+      showScripture: true
     }
   ];
   
@@ -134,22 +135,24 @@ const Practice = () => {
           <div className="max-w-4xl mx-auto">
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-divine-800 mb-6">Lectio Divina Practice</h1>
             
-            <Card className="lectio-card mb-8">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-xl font-serif font-semibold text-divine-800">
-                    Philippians 4:6-7
-                  </CardTitle>
-                  <div className="flex items-center gap-2 text-divine-500">
-                    <Clock className="h-4 w-4" />
-                    <span className="text-sm">15-20 minutes</span>
+            {currentStepData.showScripture && (
+              <Card className="lectio-card mb-8">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-xl font-serif font-semibold text-divine-800">
+                      Philippians 4:6-7
+                    </CardTitle>
+                    <div className="flex items-center gap-2 text-divine-500">
+                      <Clock className="h-4 w-4" />
+                      <span className="text-sm">15-20 minutes</span>
+                    </div>
                   </div>
-                </div>
-                <CardDescription className="text-divine-700">
-                  "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."
-                </CardDescription>
-              </CardHeader>
-            </Card>
+                  <CardDescription className="text-divine-700">
+                    "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            )}
             
             <div className="mb-6">
               <Tabs defaultValue="guided" className="w-full">
