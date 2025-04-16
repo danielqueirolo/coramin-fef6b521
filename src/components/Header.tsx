@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Book, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,17 +28,11 @@ const Header = () => {
           <Link to="/daily" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
             Daily Reading
           </Link>
-          <Link to="/practice" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
-            Practice
-          </Link>
           <Link to="/journal" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
             Journal
           </Link>
           <Link to="/library" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
             Library
-          </Link>
-          <Link to="/notes" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
-            Notes
           </Link>
 
           {user ? (
@@ -79,17 +74,11 @@ const Header = () => {
             <Link to="/daily" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
               Daily Reading
             </Link>
-            <Link to="/practice" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
-              Practice
-            </Link>
             <Link to="/journal" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
               Journal
             </Link>
             <Link to="/library" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
               Library
-            </Link>
-            <Link to="/notes" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
-              Notes
             </Link>
 
             {user ? (

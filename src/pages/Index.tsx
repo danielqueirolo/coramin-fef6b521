@@ -2,19 +2,11 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import DailyScripture from "@/components/DailyScripture";
 import LectioSteps from "@/components/LectioSteps";
 import FeatureCard from "@/components/FeatureCard";
 import { Book, Calendar, MessageSquare, HeartHandshake } from "lucide-react";
 
 const Index = () => {
-  // Sample daily scripture - in a real app, this would come from an API or database
-  const todaysScripture = {
-    reference: "Philippians 4:6-7",
-    text: "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
-    theme: "Peace & Trust"
-  };
-
   const features = [
     {
       title: "Daily Scripture",
@@ -61,26 +53,15 @@ const Index = () => {
         
         <section className="py-16 bg-divine-50">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div>
-                <h2 className="text-3xl font-serif font-bold text-divine-800 mb-6">Today's Scripture Meditation</h2>
-                <p className="text-divine-700 mb-8">
-                  Each day we provide a carefully selected passage of Scripture for your meditation. 
-                  Take time to pray with today's reading using the Lectio Divina method.
-                </p>
-                <DailyScripture passage={todaysScripture} />
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {features.map((feature, index) => (
-                  <FeatureCard 
-                    key={index}
-                    title={feature.title}
-                    description={feature.description}
-                    icon={feature.icon}
-                  />
-                ))}
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {features.map((feature, index) => (
+                <FeatureCard 
+                  key={index}
+                  title={feature.title}
+                  description={feature.description}
+                  icon={feature.icon}
+                />
+              ))}
             </div>
           </div>
         </section>
