@@ -20,7 +20,6 @@ const Header = () => {
           <span className="font-serif text-xl font-semibold text-divine-800">Coramino</span>
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           <Link to="/" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
             Home
@@ -36,6 +35,9 @@ const Header = () => {
           </Link>
           <Link to="/library" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
             Library
+          </Link>
+          <Link to="/notes" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
+            Notes
           </Link>
 
           {user ? (
@@ -58,7 +60,6 @@ const Header = () => {
           )}
         </nav>
 
-        {/* Mobile Menu Button */}
         <Button 
           variant="ghost" 
           size="sm" 
@@ -69,7 +70,6 @@ const Header = () => {
         </Button>
       </div>
 
-      {/* Mobile Navigation */}
       {isMenuOpen && (
         <div className="md:hidden bg-white border-b border-divine-100 animate-fade-in">
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
@@ -87,6 +87,9 @@ const Header = () => {
             </Link>
             <Link to="/library" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
               Library
+            </Link>
+            <Link to="/notes" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
+              Notes
             </Link>
 
             {user ? (

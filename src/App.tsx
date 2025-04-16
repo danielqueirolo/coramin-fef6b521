@@ -12,6 +12,7 @@ import Journal from "./pages/Journal";
 import Library from "./pages/Library";
 import NotFound from "./pages/NotFound";
 import Auth from "./components/Auth";
+import Notes from "./pages/Notes";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/practice" element={<Practice />} />
             <Route path="/journal" element={<Journal />} />
             <Route path="/library" element={<Library />} />
+            <Route path="/notes" element={<Notes />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
