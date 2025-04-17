@@ -1,4 +1,3 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -154,107 +153,64 @@ const Practice = () => {
               </Card>
             )}
             
-            <div className="mb-6">
-              <Tabs defaultValue="guided" className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="guided">Guided Practice</TabsTrigger>
-                  <TabsTrigger value="info">About Lectio Divina</TabsTrigger>
-                </TabsList>
-                <TabsContent value="guided">
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <div className="flex items-center gap-3">
-                        <div className="bg-divine-100 p-2 rounded-full">
-                          <currentStepData.icon className={`h-5 w-5 ${currentStepData.color}`} />
-                        </div>
-                        <div>
-                          <CardTitle className="text-xl font-medium text-divine-800">
-                            Step {currentStep + 1}: {currentStepData.title}
-                          </CardTitle>
-                          <CardDescription className="text-divine-700">
-                            {currentStepData.description}
-                          </CardDescription>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="pt-4">
-                      <ul className="space-y-2 mb-6">
-                        {currentStepData.instructions.map((instruction, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <span className="bg-divine-100 text-divine-700 w-5 h-5 flex items-center justify-center rounded-full text-xs mt-0.5">
-                              {index + 1}
-                            </span>
-                            <span className="text-divine-700">{instruction}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      
-                      {currentStepData.hasJournal && (
-                        <div className="my-6">
-                          <PracticeJournal 
-                            step={currentStepData.id} 
-                            scripture="Philippians 4:6-7"
-                          />
-                        </div>
-                      )}
-                      
-                      <div className="flex justify-between pt-4">
-                        <Button
-                          variant="outline"
-                          onClick={handlePrevious}
-                          disabled={currentStep === 0}
-                          className="border-divine-300 text-divine-700"
-                        >
-                          <ChevronLeft className="mr-2 h-4 w-4" />
-                          Previous
-                        </Button>
-                        <Button
-                          onClick={handleNext}
-                          disabled={currentStep === steps.length - 1}
-                          className="bg-divine-500 hover:bg-divine-600 text-white"
-                        >
-                          Next
-                          <ChevronRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent value="info">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-xl font-serif font-semibold text-divine-800">
-                        The Ancient Practice of Lectio Divina
-                      </CardTitle>
-                      <CardDescription className="text-divine-700">
-                        A sacred way to engage with Scripture that began with Benedictine monks in the 6th century
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-divine-700">
-                        Lectio Divina, Latin for "Divine Reading," is an ancient practice of scriptural reading, 
-                        meditation and prayer intended to promote communion with God. It treats Scripture as the 
-                        Living Word of God.
-                      </p>
-                      <p className="text-divine-700">
-                        The practice dates back to the early centuries of Christian monasticism, and was formalized 
-                        as a four-step process by the Benedictine monk Guigo II in the 12th century. Today, many practitioners
-                        add the steps of Preparation (Statio) before beginning and Action (Actio) at the end.
-                      </p>
-                      <p className="text-divine-700">
-                        Unlike regular Bible study where we analyze text for information, Lectio Divina invites us 
-                        to sit with Scripture and listen deeply to what God might be saying to us personally through 
-                        the text.
-                      </p>
-                      <p className="text-divine-700">
-                        This practice can transform our relationship with Scripture from merely reading words on a 
-                        page to encountering the living God who speaks to us directly through these sacred texts.
-                      </p>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
-            </div>
+            <Card>
+              <CardHeader className="pb-2">
+                <div className="flex items-center gap-3">
+                  <div className="bg-divine-100 p-2 rounded-full">
+                    <currentStepData.icon className={`h-5 w-5 ${currentStepData.color}`} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-xl font-medium text-divine-800">
+                      Step {currentStep + 1}: {currentStepData.title}
+                    </CardTitle>
+                    <CardDescription className="text-divine-700">
+                      {currentStepData.description}
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <ul className="space-y-2 mb-6">
+                  {currentStepData.instructions.map((instruction, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <span className="bg-divine-100 text-divine-700 w-5 h-5 flex items-center justify-center rounded-full text-xs mt-0.5">
+                        {index + 1}
+                      </span>
+                      <span className="text-divine-700">{instruction}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                {currentStepData.hasJournal && (
+                  <div className="my-6">
+                    <PracticeJournal 
+                      step={currentStepData.id} 
+                      scripture="Philippians 4:6-7"
+                    />
+                  </div>
+                )}
+                
+                <div className="flex justify-between pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={handlePrevious}
+                    disabled={currentStep === 0}
+                    className="border-divine-300 text-divine-700"
+                  >
+                    <ChevronLeft className="mr-2 h-4 w-4" />
+                    Previous
+                  </Button>
+                  <Button
+                    onClick={handleNext}
+                    disabled={currentStep === steps.length - 1}
+                    className="bg-divine-500 hover:bg-divine-600 text-white"
+                  >
+                    Next
+                    <ChevronRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </main>

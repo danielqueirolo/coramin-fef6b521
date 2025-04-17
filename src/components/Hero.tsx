@@ -15,16 +15,11 @@ const Hero = () => {
             Experience the transformative power of Lectio Divina with Coramino - a sacred way to read, 
             reflect, and respond to Scripture designed for your spiritual journey.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Link to="/daily">
-              <Button className="divine-button w-full sm:w-auto">
+              <Button className="divine-button">
                 Today's Reading
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link to="/practice">
-              <Button variant="outline" className="w-full sm:w-auto border-divine-300 text-divine-700 hover:bg-divine-50">
-                How It Works
               </Button>
             </Link>
           </div>

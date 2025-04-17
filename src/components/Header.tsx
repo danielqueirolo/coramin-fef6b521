@@ -34,6 +34,9 @@ const Header = () => {
           <Link to="/library" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
             Library
           </Link>
+          <Link to="/about" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
+            About
+          </Link>
 
           {user ? (
             <Button 
@@ -79,6 +82,9 @@ const Header = () => {
             </Link>
             <Link to="/library" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
               Library
+            </Link>
+            <Link to="/about" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
+              About
             </Link>
 
             {user ? (
