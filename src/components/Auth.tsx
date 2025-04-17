@@ -5,20 +5,33 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import TermsDialog from './TermsDialog';
+import { toast } from 'sonner';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
   const { signIn, signUp } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSignUp) {
-      await signUp(email, password);
+      setShowTerms(true);
     } else {
       await signIn(email, password);
     }
+  };
+
+  const handleAcceptTerms = async () => {
+    setShowTerms(false);
+    await signUp(email, password);
+  };
+
+  const handleDeclineTerms = () => {
+    setShowTerms(false);
+    toast.error('You must accept the terms to create an account');
   };
 
   return (
@@ -72,6 +85,11 @@ const Auth = () => {
           </div>
         </CardContent>
       </Card>
+      <TermsDialog
+        open={showTerms}
+        onAccept={handleAcceptTerms}
+        onDecline={handleDeclineTerms}
+      />
     </div>
   );
 };
