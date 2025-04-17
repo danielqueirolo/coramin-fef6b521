@@ -18,7 +18,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
           <Book className="h-6 w-6 text-divine-600" />
-          <span className="font-serif text-xl font-semibold text-divine-800">Coramino</span>
+          <span className="font-serif text-xl font-semibold text-divine-800">Coramin</span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6">
