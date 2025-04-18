@@ -27,22 +27,22 @@ const Auth = () => {
     setIsLoading(true);
     
     try {
-      const { error } = await signIn({ email: loginEmail, password: loginPassword });
+      const result = await signIn(loginEmail, loginPassword);
       
-      if (error) {
+      if (result?.error) {
         toast({
           variant: "destructive",
           title: "Login failed",
-          description: error.message,
+          description: result.error.message,
         });
       } else {
         navigate("/dashboard");
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Login failed",
-        description: "An unexpected error occurred. Please try again.",
+        description: error?.message || "An unexpected error occurred. Please try again.",
       });
     } finally {
       setIsLoading(false);
@@ -64,13 +64,13 @@ const Auth = () => {
     }
     
     try {
-      const { error } = await signUp({ email: signupEmail, password: signupPassword });
+      const result = await signUp(signupEmail, signupPassword);
       
-      if (error) {
+      if (result?.error) {
         toast({
           variant: "destructive",
           title: "Signup failed",
-          description: error.message,
+          description: result.error.message,
         });
       } else {
         toast({
@@ -78,11 +78,11 @@ const Auth = () => {
           description: "Please check your email to confirm your account.",
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Signup failed",
-        description: "An unexpected error occurred. Please try again.",
+        description: error?.message || "An unexpected error occurred. Please try again.",
       });
     } finally {
       setIsLoading(false);
