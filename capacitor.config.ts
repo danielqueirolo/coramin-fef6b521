@@ -2,7 +2,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.92b4da4d0fdb48229a5178a7ec13394b',
+  appId: 'app.coramin.meditation',
   appName: 'Coramin',
   webDir: 'dist',
   server: {
@@ -14,6 +14,18 @@ const config: CapacitorConfig = {
       keystorePath: 'release.keystore',
       keystoreAlias: 'key0',
     }
+  },
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 3000,
+      launchAutoHide: true,
+      backgroundColor: "#4688f0",
+      androidSplashResourceName: "splash",
+      androidScaleType: "CENTER_CROP",
+      showSpinner: true,
+      androidSpinnerStyle: "large",
+      spinnerColor: "#ffffff",
+    },
   }
 };
 

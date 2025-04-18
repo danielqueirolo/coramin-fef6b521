@@ -3,40 +3,58 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
-import Index from "./pages/Index";
-import Daily from "./pages/Daily";
-import Practice from "./pages/Practice";
-import Journal from "./pages/Journal";
-import Library from "./pages/Library";
+import { useState, useEffect } from "react";
+
+// Pages
+import Onboarding from "./pages/Onboarding";
+import Auth from "./pages/Auth";
+import Dashboard from "./pages/Dashboard";
+import MeditationFlow from "./pages/MeditationFlow";
+import History from "./pages/History";
+import Store from "./pages/Store";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
-import Auth from "./components/Auth";
-import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <AuthProvider>
-        <TooltipProvider delayDuration={0}>
-          <Toaster />
-          <Sonner />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/daily" element={<Daily />} />
-            <Route path="/practice" element={<Practice />} />
-            <Route path="/journal" element={<Journal />} />
-            <Route path="/library" element={<Library />} />
-            <Route path="/about" element={<About />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </TooltipProvider>
-      </AuthProvider>
-    </BrowserRouter>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean>(() => {
+    return localStorage.getItem("hasSeenOnboarding") === "true";
+  });
+
+  const completeOnboarding = () => {
+    localStorage.setItem("hasSeenOnboarding", "true");
+    setHasSeenOnboarding(true);
+  };
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AuthProvider>
+          <TooltipProvider delayDuration={0}>
+            <Toaster />
+            <Sonner />
+            <Routes>
+              <Route 
+                path="/" 
+                element={hasSeenOnboarding ? <Navigate to="/dashboard" /> : <Navigate to="/onboarding" />} 
+              />
+              <Route path="/onboarding" element={<Onboarding completeOnboarding={completeOnboarding} />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/meditation" element={<MeditationFlow />} />
+              <Route path="/history" element={<History />} />
+              <Route path="/store" element={<Store />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </TooltipProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

@@ -1,114 +1,84 @@
 
-import { Link } from "react-router-dom";
-import { Book, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Home, BookOpen, Clock, ShoppingBag, Settings } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const location = useLocation();
+  const { user } = useAuth();
+  
+  // Don't show header on these routes
+  if (['/onboarding', '/auth'].includes(location.pathname)) {
+    return null;
+  }
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  // Only show header for authenticated users
+  if (!user) {
+    return null;
+  }
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-divine-100">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <Link to="/" className="flex items-center space-x-2">
-          <Book className="h-6 w-6 text-divine-600" />
-          <span className="font-serif text-xl font-semibold text-divine-800">Coramin</span>
-        </Link>
-
-        <nav className="hidden md:flex items-center space-x-6">
-          <Link to="/" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
-            Home
-          </Link>
-          <Link to="/daily" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
-            Daily Reading
-          </Link>
-          <Link to="/journal" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
-            Journal
-          </Link>
-          <Link to="/library" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
-            Library
-          </Link>
-          <Link to="/about" className="text-divine-700 hover:text-divine-900 transition-colors font-medium">
-            About
-          </Link>
-
-          {user ? (
-            <Button 
-              variant="outline" 
-              onClick={signOut}
-              className="text-divine-700 hover:text-divine-900"
-            >
-              Sign Out
-            </Button>
-          ) : (
-            <Link to="/auth">
-              <Button 
-                variant="outline"
-                className="text-divine-700 hover:text-divine-900"
-              >
-                Sign In
-              </Button>
-            </Link>
-          )}
-        </nav>
-
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="md:hidden text-divine-700"
-          onClick={toggleMenu}
-        >
-          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
-      </div>
-
-      {isMenuOpen && (
-        <div className="md:hidden bg-white border-b border-divine-100 animate-fade-in">
-          <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            <Link to="/" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
-              Home
-            </Link>
-            <Link to="/daily" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
-              Daily Reading
-            </Link>
-            <Link to="/journal" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
-              Journal
-            </Link>
-            <Link to="/library" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
-              Library
-            </Link>
-            <Link to="/about" className="text-divine-700 hover:text-divine-900 transition-colors font-medium py-2">
-              About
-            </Link>
-
-            {user ? (
-              <Button 
-                variant="outline" 
-                onClick={signOut}
-                className="text-divine-700 hover:text-divine-900 w-full"
-              >
-                Sign Out
-              </Button>
-            ) : (
-              <Link to="/auth" className="w-full">
-                <Button 
-                  variant="outline"
-                  className="text-divine-700 hover:text-divine-900 w-full"
-                >
-                  Sign In
-                </Button>
-              </Link>
-            )}
-          </nav>
-        </div>
-      )}
+    <header className="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-50">
+      <nav className="flex justify-around items-center py-3">
+        <NavItem 
+          to="/dashboard" 
+          icon={<Home className="w-6 h-6" />} 
+          label="Home" 
+          isActive={location.pathname === '/dashboard'} 
+        />
+        <NavItem 
+          to="/meditation" 
+          icon={<BookOpen className="w-6 h-6" />} 
+          label="Meditate" 
+          isActive={location.pathname === '/meditation'} 
+        />
+        <NavItem 
+          to="/history" 
+          icon={<Clock className="w-6 h-6" />} 
+          label="History" 
+          isActive={location.pathname === '/history'} 
+        />
+        <NavItem 
+          to="/store" 
+          icon={<ShoppingBag className="w-6 h-6" />} 
+          label="Store" 
+          isActive={location.pathname === '/store'} 
+        />
+        <NavItem 
+          to="/settings" 
+          icon={<Settings className="w-6 h-6" />} 
+          label="Settings" 
+          isActive={location.pathname === '/settings'} 
+        />
+      </nav>
     </header>
+  );
+};
+
+interface NavItemProps {
+  to: string;
+  icon: React.ReactNode;
+  label: string;
+  isActive: boolean;
+}
+
+const NavItem = ({ to, icon, label, isActive }: NavItemProps) => {
+  return (
+    <Link to={to} className="flex flex-col items-center">
+      <div className={cn(
+        "p-1.5 rounded-full transition-colors",
+        isActive ? "text-blue-600" : "text-slate-500"
+      )}>
+        {icon}
+      </div>
+      <span className={cn(
+        "text-xs mt-1 font-medium",
+        isActive ? "text-blue-600" : "text-slate-500"
+      )}>
+        {label}
+      </span>
+    </Link>
   );
 };
 
