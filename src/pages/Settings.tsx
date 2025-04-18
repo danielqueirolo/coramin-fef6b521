@@ -4,22 +4,23 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
-import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
-import { Bell, Clock, Moon, Sun, Volume2 } from "lucide-react";
+import { Bell, Clock, Moon, Volume2 } from "lucide-react";
+import { toast } from "sonner";
 
 const Settings = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
-  const { toast } = useToast();
+  const { toast: uiToast } = useToast();
 
-  // Mock settings
+  // Settings state
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-  const [meditationDuration, setMeditationDuration] = useState([15]);
+  const [meditationDuration, setMeditationDuration] = useState([10]);
   const [soundVolume, setSoundVolume] = useState([70]);
   const [bibleVersion, setBibleVersion] = useState("NIV");
 
@@ -30,16 +31,14 @@ const Settings = () => {
   }, [user, navigate]);
 
   const handleSaveSettings = () => {
-    // This would save settings to a user profile
-    toast({
-      title: "Settings Saved",
-      description: "Your preferences have been updated.",
+    // This would save settings to a user profile in a real app
+    toast("Settings Saved", {
+      description: "Your preferences have been updated."
     });
   };
 
   const handleSignOut = async () => {
     await signOut();
-    navigate("/auth");
   };
 
   if (!user) return null;
@@ -52,7 +51,7 @@ const Settings = () => {
       </div>
 
       <div className="p-6 space-y-6">
-        <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+        <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
           <div className="flex items-center justify-between">
             <div className="flex items-start gap-3">
               <Bell className="h-5 w-5 text-slate-600 mt-0.5" />
@@ -118,7 +117,7 @@ const Settings = () => {
 
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <Sun className="h-5 w-5 text-slate-600 mt-0.5" />
+              <Bell className="h-5 w-5 text-slate-600 mt-0.5" />
               <div>
                 <h3 className="font-medium text-slate-900">Bible Version</h3>
                 <p className="text-sm text-slate-500">Select your preferred translation</p>

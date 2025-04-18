@@ -1,95 +1,85 @@
 
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
-import { Play, BookOpen, Clock, Sparkles } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { HeartHandshake, BookOpen, Clock } from "lucide-react";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
   const { user } = useAuth();
-  const today = new Date();
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
-  const meditationStreakDays = 3; // This would come from user data
-  const lastMeditationDate = "Today"; // This would come from user data
+  // Daily scripture quote
+  const dailyQuote = "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.";
 
-  if (!user) {
-    navigate("/auth");
-    return null;
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/auth");
+    }
+  }, [user, navigate]);
+
+  const handleStartMeditation = () => {
+    navigate("/meditation");
+  };
+
+  if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-24">
-      <div className="bg-blue-600 text-white p-6">
-        <h1 className="text-2xl font-semibold mb-2">Welcome back</h1>
-        <p className="opacity-90">{user.email}</p>
+    <div className="min-h-screen bg-white">
+      <div className="h-[70vh] flex flex-col items-center justify-center p-6 text-center">
+        <div className="max-w-lg mx-auto">
+          <h1 className="text-2xl md:text-3xl font-medium text-slate-900 mb-6 leading-relaxed">
+            "{dailyQuote}"
+          </h1>
+          
+          <div className="flex justify-center mb-12">
+            <div className="flex gap-2 text-slate-500 text-sm">
+              <Clock size={16} className="mt-0.5" />
+              <span>Philippians 4:6</span>
+            </div>
+          </div>
+          
+          <Button 
+            onClick={handleStartMeditation}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full text-lg font-medium"
+          >
+            Start Your Meditation
+          </Button>
+        </div>
       </div>
 
-      <div className="p-6 space-y-6">
-        <Card className="overflow-hidden border-none shadow-md">
-          <CardContent className="p-0">
-            <div className="bg-blue-100 p-6 flex items-center justify-between">
-              <div>
-                <h2 className="text-xl font-semibold text-blue-800">Today's Meditation</h2>
-                <p className="text-blue-700 mt-1">15 minutes of peace</p>
-              </div>
-              <Button 
-                onClick={() => navigate("/meditation")}
-                className="bg-blue-600 hover:bg-blue-700"
-              >
-                <Play className="mr-2 h-4 w-4" />
-                Start
-              </Button>
-            </div>
-            <div className="p-4 bg-white">
-              <h3 className="font-medium text-slate-900 mb-2">Daily Scripture</h3>
-              <p className="text-slate-600 italic">
-                "Be still, and know that I am God. I will be exalted among the nations,
-                I will be exalted in the earth!" - Psalm 46:10
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="grid grid-cols-2 gap-4">
-          <Card className="border-none shadow-md">
-            <CardContent className="p-4">
-              <div className="flex flex-col items-center text-center">
-                <div className="p-3 bg-purple-100 rounded-full mb-3">
-                  <Sparkles className="h-6 w-6 text-purple-600" />
-                </div>
-                <h3 className="font-medium text-slate-900">Streak</h3>
-                <p className="text-3xl font-bold text-purple-600">{meditationStreakDays} days</p>
-              </div>
-            </CardContent>
-          </Card>
+      <div className="bg-slate-50 py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-xl font-semibold text-slate-900 mb-6 text-center">Why Lectio Divina?</h2>
           
-          <Card className="border-none shadow-md">
-            <CardContent className="p-4">
-              <div className="flex flex-col items-center text-center">
-                <div className="p-3 bg-green-100 rounded-full mb-3">
-                  <Clock className="h-6 w-6 text-green-600" />
-                </div>
-                <h3 className="font-medium text-slate-900">Last meditation</h3>
-                <p className="text-xl font-medium text-green-600">{lastMeditationDate}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                <HeartHandshake className="text-blue-600 h-6 w-6" />
               </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold text-slate-900 mb-4">Meditation Calendar</h2>
-          <Card className="border-none shadow-md">
-            <CardContent className="p-4">
-              <Calendar 
-                mode="single"
-                selected={today}
-                className="rounded-md border"
-              />
-            </CardContent>
-          </Card>
+              <h3 className="font-medium text-slate-900 mb-2">Reduce Anxiety</h3>
+              <p className="text-slate-600">Calm your mind and find peace through guided Christian meditation practices.</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                <BookOpen className="text-blue-600 h-6 w-6" />
+              </div>
+              <h3 className="font-medium text-slate-900 mb-2">Deepen Faith</h3>
+              <p className="text-slate-600">Connect more intimately with Scripture and strengthen your relationship with God.</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                <Clock className="text-blue-600 h-6 w-6" />
+              </div>
+              <h3 className="font-medium text-slate-900 mb-2">Daily Practice</h3>
+              <p className="text-slate-600">Build a consistent spiritual routine that fits into your busy life with just minutes a day.</p>
+            </div>
+          </div>
         </div>
       </div>
 

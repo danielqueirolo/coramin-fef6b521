@@ -1,9 +1,9 @@
+
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import type { User, Session } from '@supabase/supabase-js';
-import { scheduleNotification } from '@/services/notificationService';
 
 interface AuthContextType {
   user: User | null;
@@ -41,18 +41,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
-      navigate('/notes');
-      scheduleNotification();
-      toast({
-        title: "Welcome back!",
+      navigate('/dashboard');
+      toast("Welcome back!", {
         description: "You've successfully signed in."
       });
     } catch (error: any) {
-      toast({
-        title: "Error signing in",
+      toast("Error signing in", {
         description: error.message,
-        variant: "destructive"
       });
+      throw error;
     }
   };
 
@@ -60,16 +57,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) throw error;
-      toast({
-        title: "Welcome to Coramino!",
+      toast("Welcome to Coramin!", {
         description: "Please check your email to verify your account."
       });
     } catch (error: any) {
-      toast({
-        title: "Error signing up",
+      toast("Error signing up", {
         description: error.message,
-        variant: "destructive"
       });
+      throw error;
     }
   };
 
@@ -78,15 +73,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       navigate('/');
-      toast({
-        title: "Signed out",
+      toast("Signed out", {
         description: "You've been successfully signed out."
       });
     } catch (error: any) {
-      toast({
-        title: "Error signing out",
+      toast("Error signing out", {
         description: error.message,
-        variant: "destructive"
       });
     }
   };

@@ -1,84 +1,40 @@
 
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, Clock, ShoppingBag, Settings } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/contexts/AuthContext";
+import { Home, BookOpen, Settings, ShoppingBag, HeartHandshake } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
-  const { user } = useAuth();
-  
-  // Don't show header on these routes
-  if (['/onboarding', '/auth'].includes(location.pathname)) {
-    return null;
-  }
+  const [activeTab, setActiveTab] = useState(location.pathname);
 
-  // Only show header for authenticated users
-  if (!user) {
-    return null;
-  }
+  const tabs = [
+    { name: "Home", icon: <Home size={24} />, path: "/dashboard" },
+    { name: "Meditate", icon: <HeartHandshake size={24} />, path: "/meditation" },
+    { name: "History", icon: <BookOpen size={24} />, path: "/history" },
+    { name: "Store", icon: <ShoppingBag size={24} />, path: "/store" },
+    { name: "Settings", icon: <Settings size={24} />, path: "/settings" },
+  ];
 
   return (
-    <header className="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-50">
-      <nav className="flex justify-around items-center py-3">
-        <NavItem 
-          to="/dashboard" 
-          icon={<Home className="w-6 h-6" />} 
-          label="Home" 
-          isActive={location.pathname === '/dashboard'} 
-        />
-        <NavItem 
-          to="/meditation" 
-          icon={<BookOpen className="w-6 h-6" />} 
-          label="Meditate" 
-          isActive={location.pathname === '/meditation'} 
-        />
-        <NavItem 
-          to="/history" 
-          icon={<Clock className="w-6 h-6" />} 
-          label="History" 
-          isActive={location.pathname === '/history'} 
-        />
-        <NavItem 
-          to="/store" 
-          icon={<ShoppingBag className="w-6 h-6" />} 
-          label="Store" 
-          isActive={location.pathname === '/store'} 
-        />
-        <NavItem 
-          to="/settings" 
-          icon={<Settings className="w-6 h-6" />} 
-          label="Settings" 
-          isActive={location.pathname === '/settings'} 
-        />
-      </nav>
-    </header>
-  );
-};
-
-interface NavItemProps {
-  to: string;
-  icon: React.ReactNode;
-  label: string;
-  isActive: boolean;
-}
-
-const NavItem = ({ to, icon, label, isActive }: NavItemProps) => {
-  return (
-    <Link to={to} className="flex flex-col items-center">
-      <div className={cn(
-        "p-1.5 rounded-full transition-colors",
-        isActive ? "text-blue-600" : "text-slate-500"
-      )}>
-        {icon}
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50">
+      <div className="flex justify-around items-center py-2">
+        {tabs.map((tab) => (
+          <Link
+            key={tab.path}
+            to={tab.path}
+            className={`flex flex-col items-center py-2 px-4 ${
+              activeTab === tab.path
+                ? "text-blue-600"
+                : "text-slate-500 hover:text-slate-700"
+            }`}
+            onClick={() => setActiveTab(tab.path)}
+          >
+            {tab.icon}
+            <span className="text-xs mt-1">{tab.name}</span>
+          </Link>
+        ))}
       </div>
-      <span className={cn(
-        "text-xs mt-1 font-medium",
-        isActive ? "text-blue-600" : "text-slate-500"
-      )}>
-        {label}
-      </span>
-    </Link>
+    </nav>
   );
 };
 

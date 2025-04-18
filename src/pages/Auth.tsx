@@ -27,17 +27,8 @@ const Auth = () => {
     setIsLoading(true);
     
     try {
-      const result = await signIn(loginEmail, loginPassword);
-      
-      if (result?.error) {
-        toast({
-          variant: "destructive",
-          title: "Login failed",
-          description: result.error.message,
-        });
-      } else {
-        navigate("/dashboard");
-      }
+      await signIn(loginEmail, loginPassword);
+      navigate("/dashboard");
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -64,20 +55,11 @@ const Auth = () => {
     }
     
     try {
-      const result = await signUp(signupEmail, signupPassword);
-      
-      if (result?.error) {
-        toast({
-          variant: "destructive",
-          title: "Signup failed",
-          description: result.error.message,
-        });
-      } else {
-        toast({
-          title: "Signup successful",
-          description: "Please check your email to confirm your account.",
-        });
-      }
+      await signUp(signupEmail, signupPassword);
+      toast({
+        title: "Signup successful",
+        description: "Please check your email to confirm your account.",
+      });
     } catch (error: any) {
       toast({
         variant: "destructive",
