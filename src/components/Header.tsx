@@ -9,10 +9,10 @@ const Header = () => {
 
   const tabs = [
     { name: "Home", icon: <Home size={24} />, path: "/dashboard" },
-    { name: "Meditate", icon: <HeartHandshake size={24} />, path: "/meditation" },
-    { name: "History", icon: <BookOpen size={24} />, path: "/history" },
-    { name: "Store", icon: <ShoppingBag size={24} />, path: "/store" },
-    { name: "Settings", icon: <Settings size={24} />, path: "/settings" },
+    { name: "Medite", icon: <HeartHandshake size={24} />, path: "/meditation" },
+    { name: "Lectios", icon: <BookOpen size={24} />, path: "/history" },
+    { name: "Loja", icon: <ShoppingBag size={24} />, path: "/store" },
+    { name: "Configurações", icon: <Settings size={24} />, path: "/settings" },
   ];
 
   return (
@@ -24,7 +24,7 @@ const Header = () => {
             to={tab.path}
             className={`flex flex-col items-center py-2 px-4 ${
               activeTab === tab.path
-                ? "text-blue-600"
+                ? "text-divine-600" 
                 : "text-slate-500 hover:text-slate-700"
             }`}
             onClick={() => setActiveTab(tab.path)}

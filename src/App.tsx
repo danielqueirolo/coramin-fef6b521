@@ -8,7 +8,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { useState, useEffect } from "react";
 
 // Pages
-import Onboarding from "./pages/Onboarding";
+import Welcome from "./pages/Welcome";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import MeditationFlow from "./pages/MeditationFlow";
@@ -16,17 +16,18 @@ import History from "./pages/History";
 import Store from "./pages/Store";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import Practice from "./pages/Practice";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean>(() => {
-    return localStorage.getItem("hasSeenOnboarding") === "true";
+  const [hasSeenWelcome, setHasSeenWelcome] = useState<boolean>(() => {
+    return localStorage.getItem("hasSeenWelcome") === "true";
   });
 
-  const completeOnboarding = () => {
-    localStorage.setItem("hasSeenOnboarding", "true");
-    setHasSeenOnboarding(true);
+  const completeWelcome = () => {
+    localStorage.setItem("hasSeenWelcome", "true");
+    setHasSeenWelcome(true);
   };
 
   return (
@@ -39,15 +40,16 @@ const App = () => {
             <Routes>
               <Route 
                 path="/" 
-                element={hasSeenOnboarding ? <Navigate to="/dashboard" /> : <Navigate to="/onboarding" />} 
+                element={hasSeenWelcome ? <Navigate to="/auth" /> : <Navigate to="/welcome" />} 
               />
-              <Route path="/onboarding" element={<Onboarding completeOnboarding={completeOnboarding} />} />
+              <Route path="/welcome" element={<Welcome />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/meditation" element={<MeditationFlow />} />
               <Route path="/history" element={<History />} />
               <Route path="/store" element={<Store />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/practice" element={<Practice />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </TooltipProvider>

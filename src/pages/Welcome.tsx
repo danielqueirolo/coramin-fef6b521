@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
 import { Wind, MessageSquare, Coffee } from 'lucide-react';
@@ -7,18 +7,18 @@ import { Wind, MessageSquare, Coffee } from 'lucide-react';
 const WelcomeSlides = [
   {
     icon: Wind,
-    title: "Reduce Anxiety Through Meditation",
-    description: "Discover a peaceful path to calm your mind and release stress. Meditation is not just a practice, but a journey towards inner tranquility.",
+    title: "Reduza a Ansiedade Através da Meditação",
+    description: "Descubra um caminho pacífico para acalmar sua mente e liberar o estresse. A meditação cristã não é apenas uma prática, mas uma jornada rumo à tranquilidade interior.",
   },
   {
     icon: MessageSquare,
-    title: "The Power of Contemplation",
-    description: "Learn to pause, reflect, and listen deeply. Contemplation opens doors to self-understanding and profound spiritual insights.",
+    title: "O Poder da Contemplação",
+    description: "Aprenda a pausar, refletir e ouvir profundamente. A contemplação abre portas para o autoconhecimento e insights espirituais profundos.",
   },
   {
     icon: Coffee,
-    title: "Embrace Silence",
-    description: "In the quietude of silence, find strength, clarity, and connection. Silence is not emptiness, but a fullness of presence.",
+    title: "Abrace o Silêncio",
+    description: "Na quietude do silêncio, encontre força, clareza e conexão. O silêncio não é vazio, mas uma plenitude de presença divina.",
   }
 ];
 
@@ -61,13 +61,13 @@ const Welcome = () => {
             onClick={handleSkip} 
             className="text-divine-700"
           >
-            Skip
+            Pular
           </Button>
           <Button 
             onClick={handleNext} 
             className="bg-divine-600 hover:bg-divine-700 text-white"
           >
-            {currentSlide < WelcomeSlides.length - 1 ? 'Next' : 'Get Started'}
+            {currentSlide < WelcomeSlides.length - 1 ? 'Próximo' : 'Começar'}
           </Button>
         </div>
         
