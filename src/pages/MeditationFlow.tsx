@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
 const MeditationFlow = () => {
@@ -15,9 +15,10 @@ const MeditationFlow = () => {
   });
   const [prayer, setPrayer] = useState("");
   const [reflection, setReflection] = useState("");
-  const [meditationTimer, setMeditationTimer] = useState(60); // Default 1 minute (in seconds)
+  const [meditationTimer, setMeditationTimer] = useState(60);
   const [timeLeft, setTimeLeft] = useState(meditationTimer);
   const [timerActive, setTimerActive] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     if (!user) {
@@ -30,17 +31,24 @@ const MeditationFlow = () => {
     let timer;
     if (timerActive && timeLeft > 0) {
       timer = setInterval(() => {
-        setTimeLeft(prev => prev - 1);
+        setTimeLeft(prev => {
+          const newTime = prev - 1;
+          setProgress((meditationTimer - newTime) / meditationTimer * 100);
+          return newTime;
+        });
       }, 1000);
     } else if (timeLeft === 0 && timerActive) {
       setTimerActive(false);
-      // Show Oratio button when timer ends
+      toast("Meditação concluída", {
+        description: "Você pode continuar para a próxima etapa quando desejar."
+      });
     }
     return () => clearInterval(timer);
-  }, [timerActive, timeLeft]);
+  }, [timerActive, timeLeft, meditationTimer]);
 
   const startTimer = () => {
     setTimeLeft(meditationTimer);
+    setProgress(0);
     setTimerActive(true);
   };
 
@@ -74,35 +82,30 @@ const MeditationFlow = () => {
   };
 
   const steps = [
-    // For first-time users: Introduction to Lectio Divina
     {
       id: "intro",
       title: "Lectio Divina",
       description: isFirstTime ? "Conheça essa antiga prática espiritual" : "Prepare-se para a meditação",
       content: (
-        <div className="space-y-6">
-          <p className="text-divine-700">
-            Lectio Divina (Leitura Divina) é uma prática monástica tradicional de leitura, meditação e oração das Escrituras que remonta ao século VI.
-          </p>
-          <p className="text-divine-700">
-            Trata a Escritura como a Palavra Viva e busca ouvir a voz de Deus através do texto, permitindo que Ele fale diretamente ao seu coração.
-          </p>
-          <p className="text-divine-700">
-            Esta prática segue quatro passos principais: leitura (lectio), meditação (meditatio), oração (oratio) e contemplação (contemplatio).
-          </p>
-          <div className="flex justify-end mt-8">
-            <Button 
-              onClick={() => setCurrentStep(currentStep + 1)}
-              className="bg-divine-600 hover:bg-divine-700 text-white"
-            >
-              Próximo
-            </Button>
+        <div className="flex flex-col items-center justify-center min-h-[60vh] px-6 space-y-6">
+          <div className="max-w-md text-center">
+            <p className="text-divine-700 mb-6">
+              Lectio Divina (Leitura Divina) é uma prática monástica tradicional de leitura, 
+              meditação e oração das Escrituras que remonta ao século VI.
+            </p>
+            <p className="text-divine-700 mb-6">
+              Trata a Escritura como a Palavra Viva e busca ouvir a voz de Deus através do texto, 
+              permitindo que Ele fale diretamente ao seu coração.
+            </p>
+            <p className="text-divine-700">
+              Esta prática segue quatro passos principais: leitura (lectio), 
+              meditação (meditatio), oração (oratio) e contemplatio.
+            </p>
           </div>
         </div>
       ),
       showBack: false
     },
-    // Step 1: Statio (Preparation)
     {
       id: "statio",
       title: "Preparação (Statio)",
@@ -144,7 +147,6 @@ const MeditationFlow = () => {
       ),
       showBack: true
     },
-    // Step 2: Lectio (Reading)
     {
       id: "lectio",
       title: "Leitura (Lectio)",
@@ -186,7 +188,6 @@ const MeditationFlow = () => {
       ),
       showBack: true
     },
-    // Step 3: Scripture
     {
       id: "scripture",
       title: "Filipenses 4:6-7",
@@ -222,47 +223,33 @@ const MeditationFlow = () => {
       ),
       showBack: true
     },
-    // Step 4: Meditatio (Meditation)
     {
       id: "meditatio",
       title: "Meditação (Meditatio)",
       description: "Reflita sobre o significado do texto para sua vida",
       content: (
-        <div className="h-full flex flex-col items-center justify-center space-y-8">
-          <div className="w-32 h-32 rounded-full bg-divine-100 flex items-center justify-center text-2xl text-divine-700">
-            {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
+        <div className="h-full flex flex-col items-center justify-center space-y-8 relative">
+          <div className="w-full max-w-md mx-auto px-4">
+            <Progress value={progress} className="h-2 bg-divine-100" />
           </div>
           
-          <p className="text-divine-700 text-center">
+          <p className="text-divine-700 text-center px-6">
             Medite em silêncio sobre a passagem. 
             <br />Permita que a palavra penetre em seu coração.
           </p>
           
-          {!timerActive && timeLeft === 0 && (
-            <div className="flex justify-center mt-8 w-full">
-              <Button 
-                onClick={() => setCurrentStep(currentStep + 1)}
-                className="bg-divine-600 hover:bg-divine-700 text-white px-8"
-              >
-                Oratio
-              </Button>
-            </div>
-          )}
-          
           <Button 
-            variant="ghost" 
-            onClick={handleBack}
-            className="text-divine-500 absolute bottom-4 left-4"
+            variant="ghost"
+            onClick={() => setCurrentStep(currentStep + 1)}
+            className="absolute bottom-20 right-4 bg-divine-50 hover:bg-divine-100 text-divine-700"
           >
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Voltar
+            Oratio
           </Button>
         </div>
       ),
       showBack: true,
       fullScreen: true
     },
-    // Step 5: Oratio (Prayer)
     {
       id: "oratio",
       title: "Oração (Oratio)",
@@ -298,7 +285,6 @@ const MeditationFlow = () => {
       ),
       showBack: true
     },
-    // Step 6: Contemplatio (Contemplation)
     {
       id: "contemplatio",
       title: "Contemplação (Contemplatio)",
@@ -335,7 +321,6 @@ const MeditationFlow = () => {
       ),
       showBack: true
     },
-    // Step 7: Actio (Action)
     {
       id: "actio",
       title: "Ação (Actio)",
@@ -388,7 +373,7 @@ const MeditationFlow = () => {
     <div className="min-h-screen bg-white pb-16">
       <div className={`container mx-auto px-4 py-8 ${currentStepData.fullScreen ? "h-screen" : ""}`}>
         {!currentStepData.fullScreen && (
-          <div className="mb-6">
+          <div className="mb-6 text-center">
             <h1 className="text-2xl font-serif font-semibold text-divine-800">{currentStepData.title}</h1>
             {currentStepData.description && (
               <p className="text-divine-600">{currentStepData.description}</p>
@@ -396,8 +381,19 @@ const MeditationFlow = () => {
           </div>
         )}
         
-        <div className={`${currentStepData.fullScreen ? "h-full" : ""}`}>
+        <div className={`${currentStepData.fullScreen ? "h-full" : ""} relative`}>
           {currentStepData.content}
+          
+          {currentStepData.showBack && (
+            <Button 
+              variant="ghost" 
+              onClick={handleBack}
+              className="fixed bottom-24 left-4 text-divine-500 hover:text-divine-600"
+            >
+              <ChevronLeft className="h-4 w-4 mr-1" />
+              Voltar
+            </Button>
+          )}
         </div>
       </div>
     </div>

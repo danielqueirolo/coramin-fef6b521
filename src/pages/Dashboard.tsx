@@ -26,19 +26,21 @@ const Dashboard = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6">
-      <div className="max-w-md mx-auto text-center">
-        <h1 className="text-2xl md:text-3xl font-medium text-divine-800 mb-10 leading-relaxed">
-          "{dailyQuote}"
-        </h1>
-        
-        <Button 
-          onClick={handleStartMeditation}
-          className="bg-divine-600 hover:bg-divine-700 text-white px-8 py-6 rounded-full text-lg font-medium flex items-center space-x-2"
-        >
-          <HeartHandshake className="h-5 w-5 mr-2" />
-          <span>Já meditou na Palavra hoje?</span>
-        </Button>
+    <div className="min-h-screen bg-white flex flex-col">
+      <div className="flex-grow flex flex-col items-center justify-center p-6">
+        <div className="max-w-md w-full mx-auto text-center space-y-8">
+          <h1 className="text-2xl md:text-3xl font-medium text-divine-800 leading-relaxed">
+            "{dailyQuote}"
+          </h1>
+          
+          <Button 
+            onClick={handleStartMeditation}
+            className="w-full max-w-sm mx-auto bg-divine-600 hover:bg-divine-700 text-white px-8 py-6 rounded-full text-lg font-medium flex items-center justify-center space-x-2"
+          >
+            <HeartHandshake className="h-5 w-5 mr-2" />
+            <span>Já meditou na Palavra hoje?</span>
+          </Button>
+        </div>
       </div>
 
       <Header />

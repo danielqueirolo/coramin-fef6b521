@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, Settings, ShoppingBag, HeartHandshake } from "lucide-react";
+import { Home, BookOpen, Settings, GraduationCap, HeartHandshake } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -11,7 +11,7 @@ const Header = () => {
     { name: "Home", icon: <Home size={24} />, path: "/dashboard" },
     { name: "Medite", icon: <HeartHandshake size={24} />, path: "/meditation" },
     { name: "Lectios", icon: <BookOpen size={24} />, path: "/history" },
-    { name: "Loja", icon: <ShoppingBag size={24} />, path: "/store" },
+    { name: "Mergulhe", icon: <GraduationCap size={24} />, path: "/store" },
     { name: "Configurações", icon: <Settings size={24} />, path: "/settings" },
   ];
 
